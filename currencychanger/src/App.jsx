@@ -1,59 +1,69 @@
 import { useState } from 'react';
-import InputArea from './components';
+import InputBox from './components';
 import useCurrencyInfo from './hooks/customHook';
 import './App.css';
 
 function App() {
 
-const [amount,setAmount] = useState(0);
-const [from,setFrom] = useState('USD');
-const [to,setTo] = useState('INR');
-const [convertedAmount,setConvertedAmount] = useState(0);
+  const [amount, setAmount] = useState();
+  const [from, setFrom] = useState('usd');
+  const [to, setTo] = useState('inr');
+  const [convertedAmount, setConvertedAmount] = useState();
 
-const useCurrencyInfo = useCurrencyInfo("from")
+  const currencyInfo = useCurrencyInfo(from)
 
-const options = Object.keys(useCurrencyInfo);
-const convert = () => {
-  setConvertedAmount(amount * useCurrencyInfo[to])
-}
-const swap = () => {
-  setFrom(to);
-  setTo(from);
-  setConvertedAmount(amount)
-  setAmount(convertedAmount)
-}
-
-
+  const options = Object.keys(currencyInfo);
+  const convert = () =>{
+    setConvertedAmount(amount * currencyInfo[to])
+  }
+  const swap = () => {
+    setFrom(to);
+    setTo(from);
+    setConvertedAmount(amount)
+    setAmount(convertedAmount)
+  }
 
   return (
-   <div className='w-full h-80 bg-gray'>
-    <div>
-     <InputArea
-     label = 'From'
-      amount = {amount}
-      onAmountChange = {setAmount}
-      onCurrencyChange = {setFrom}
-      currencyOptions = {options}
+    <>
+    <h2>Currency Converter App</h2>
+    <div className='w-full h-80 bg-gray'>
+      
+      <div 
+      className='m-2'
+      >
+        <InputBox
+          label='From'
+          amount={amount}
+          currencyOptions={options}
+          selectCurrency={from}
+          onCurrencyChange={(currency) => setFrom(currency)}
+          onAmountChange={(amount) => setAmount(amount)}
 
-     />
-    </div>
-    <div>
-      <button onClick={swap}>Swap</button>
-    </div>
-    <div>
-    <InputArea
-     label = 'To'
-      amount = {amount}
-      onAmountChange = {setAmount}
-      onCurrencyChange = {setFrom}
-      currencyOptions = {options}
+        />
+      </div>
+      <div>
+        <button 
+        className='bg-green-300 m-0'
+        onClick={swap}>SWAP</button>
+      </div>
+      <div className='m-2'>
+        <InputBox
+          label='To'
+          amount={convertedAmount}
+          onCurrencyChange={(currency) =>
+            setTo(currency)}
+          selectCurrency={to}
+          currencyOptions={options}
 
-     />
+        />
+      </div>
+      <div>
+        <button 
+        className='bg-green-300 m-0'
+        onClick={convert}>Convert: {from.toUpperCase()} to {to.toUpperCase()}</button>
+      </div>
     </div>
-    <div>
-      <button onClick={convert}>Convert{`{from} to {to}`}</button>
-    </div>
-   </div>
+    </>
   )
 }
 
