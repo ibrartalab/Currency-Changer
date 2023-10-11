@@ -1,4 +1,4 @@
-function inputArea({
+function InputArea({
     label,
     amount,
     onAmountChange,
@@ -12,24 +12,24 @@ function inputArea({
         <div>
             <div>
                 <label htmlFor="">{label}</label>
-                <input 
-                type="number"
-                placeholder="Amount"
-                value={amount}
-                onChange={(e) => onAmountChange && onAmountChange(Number(e.target.value))}
+                <input
+                    type="number"
+                    placeholder="Amount"
+                    value={amount}
+                    onChange={(e) => onAmountChange && onAmountChange(Number(e.target.value))}
                 />
             </div>
             <div>
                 <p>Currency Type</p>
                 <select
-                value={selectCurrency}
-                onChange={(e) => onCurrencyChange && onCurrencyChange(e.target.value)}
+                    value={selectCurrency}
+                    onChange={(e) => onCurrencyChange && onCurrencyChange(e.target.value)}
                 >
-                    {currencyOptions.map((option) =>(
+                    {currencyOptions.map((option) => (
                         <option
-                        key={option}
-                        value={option}>
-                        {option}</option>
+                            key={option}
+                            value={option}>
+                            {option}</option>
                     )
                     )}
                 </select>
@@ -38,4 +38,4 @@ function inputArea({
     )
 }
 
-export default inputArea;
+export default InputArea;
